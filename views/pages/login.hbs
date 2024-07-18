@@ -1,0 +1,19 @@
+{{> message}}
+
+<div id="login_form" class="container">
+    <h1>Login</h1>
+    <form method="post" action="/login">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" placeholder="" class="form-control"/>
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" placeholder="" class="form-control"/>
+        </div>
+        <button id="submit_button" class="btn btn-primary" type="submit">
+            Login
+        </button>
+        <div>
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </div>
+    </form>
+</div>

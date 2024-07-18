@@ -1,0 +1,5 @@
+node_modules
+package-lock.json
+init_db.sh
+.env
+docker-compose.yaml
