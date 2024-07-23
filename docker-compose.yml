@@ -5,11 +5,13 @@ services:
     env_file: .env
     expose:
       - '5432'
+    networks:
+      - app-network
     volumes:
       - lab-10-deployment:/var/lib/postgresql/data
       - ./init_data:/docker-entrypoint-initdb.d
   web:
-    image: node:lts
+    image: node:14
     user: root
     working_dir: /home/node/app
     env_file: .env
@@ -19,12 +21,29 @@ services:
       - db
     ports:
       - '3000:3000'
+    networks:
+      - app-network
     volumes:
       - ./:/home/node/app
     command: 'npm start'
-# This defines our volume(s), which will persist throughout startups.
-# If you want to get rid of a hanging volume, e.g. to test your database init,
-# run `docker-compose rm -v`. Note that this will remove ALL of your data, so
-# be extra sure you've made a stable backup somewhere.
+  test:
+    image: node:14
+    user: root
+    working_dir: /home/node/app
+    env_file: .env
+    environment:
+      - NODE_ENV=test
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - ./:/home/node/app
+    command: ['sh', '-c', './wait-for-it.sh db 5432 -- npm test']
+
+networks:
+  app-network:
+    driver: bridge
+
 volumes:
   lab-10-deployment:

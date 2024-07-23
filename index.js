@@ -25,11 +25,11 @@ const hbs = handlebars.create({
 
 // database configuration
 const dbConfig = {
-  host: process.env.POSTGRES_HOST, // the database server
-  port: process.env.POSTGRES_PORT, // the database port
-  database: process.env.POSTGRES_DB, // the database name
-  user: process.env.POSTGRES_USER, // the user account to connect with
-  password: process.env.POSTGRES_PASSWORD, // the password of the user account
+  host: process.env.DB_HOST || 'db',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'users_db',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'password',
 };
 
 const db = pgp(dbConfig);
